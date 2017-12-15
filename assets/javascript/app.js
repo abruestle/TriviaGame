@@ -256,7 +256,7 @@ game = {
 		    });
 
 		}
-		$("#image").html('<img src ="'+image+'">');
+		$("#image").html('<img src ="'+image+'" class="img-fluid">');
 
 		if(game.curQuestion == game.questions.length-1) {
 			game.endGame();
@@ -270,7 +270,7 @@ game = {
 	endGame: function() {
 		game.stopwatch.stop();
 		//End results!
-		$("#main").html("<p>Game finished! Your results:</p>Total time: "+game.stopwatch.timeConverter( game.time)+"<br>Most time consuming question: "+game.questions[game.questionTimes.indexOf(Math.max.apply(Math,game.questionTimes))].question+"<br>Least time consuming question: "+game.questions[game.questionTimes.indexOf(Math.min.apply(Math,game.questionTimes))].question+"<br>You got "+game.right+" questions right, "+game.wrong+" questions wrong, and ran out of time on "+game.ranOut+' questions.<br><div class="btn-group"><button class="btn btn-default" type="button" id="restart"><em class="glyphicon glyphicon-repeat"></em> Restart?</button></div><br>');
+		$("#main").html("<p>Game finished! Your results:</p><p>Total time: "+game.stopwatch.timeConverter( game.time)+"</p><p>Most time consuming question: "+game.questions[game.questionTimes.indexOf(Math.max.apply(Math,game.questionTimes))].question+"</p><p>Least time consuming question: "+game.questions[game.questionTimes.indexOf(Math.min.apply(Math,game.questionTimes))].question+"</p><p>You got "+game.right+" questions right, "+game.wrong+" questions wrong, and ran out of time on "+game.ranOut+' questions.</p><p><div class="btn-group"><button class="btn btn-default" type="button" id="restart"><em class="glyphicon glyphicon-repeat"></em> Restart?</button></div></p>');
 			game.stopwatch.reset();
 			game.right= 0;
 			game.wrong= 0;
@@ -323,7 +323,7 @@ game = {
 	        // <div class="radio"><label id="label'+i+'"><input type="radio" name="optradio" id="'+i+'">'+answer+'</label></div>');
 
 
-	        $("#answers").append('<label class="btn answerBtn"><input type="radio" name="gender1" checked><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span id="'+i+'">'+answer+'</span></label>');
+	        $("#answers").append('<label class="btn answerBtn"><input type="radio"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span id="'+i+'">'+answer+'</span></label>');
 		}
 		game.stopwatch.start();
 

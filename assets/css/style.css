@@ -2,7 +2,7 @@
 	font-size:20px;
 }
 
-#image {
+img, #image {
 	max-height: 350px;
 	margin: 10px auto;
 }
