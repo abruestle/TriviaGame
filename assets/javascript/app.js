@@ -11,7 +11,8 @@ game = {
 				"Pines",
 				"Dogwoods",
 				"Cedar"
-			]	
+			],
+			image: "assets/images/Albino-Redwood.jpg"
 		},
 		{		
 			category: "Weird Nature",	
@@ -23,7 +24,8 @@ game = {
 				"Blue",
 				"Triangle",
 				"Poisonous"
-			]	
+			],
+			image: "assets/images/st02.jpg"
 		},		
 		{		
 			category: "Weird Nature",	
@@ -35,7 +37,8 @@ game = {
 				"Bunya Pine",
 				"Cerbera Odollam",
 				"Antiaris"
-			]	
+			],
+			image: "assets/images/manchineel-trees.jpg"
 		},		
 		{		
 			category: "Weird Nature",	
@@ -47,7 +50,8 @@ game = {
 				"Liquid",
 				"Paralyzing",
 				"Inflammable"
-			]	
+			],
+			image: "assets/images/sandbox.jpg"
 		},		
 		{		
 			category: "Weird Nature",	
@@ -59,7 +63,8 @@ game = {
 				"Being eaten",
 				"For centuries not hibernating",
 				"Diseases"
-			]	
+			],
+			image: "assets/images/tardigrade.jpg"
 		},		
 		{		
 			category: "Weird Nature",	
@@ -71,7 +76,8 @@ game = {
 				"Heart palpitations",
 				"Anger",
 				"Tiredness"
-			]	
+			],
+			image: "assets/images/cat.gif"	
 		},		
 		{		
 			category: "Weird Nature",	
@@ -156,7 +162,7 @@ game = {
 		      //Get the current time, pass that into the stopwatch.timeConverter function,
 		      //        and save the result in a variable.
 
-		      game.questionTimes[game.curQuestion] = game.stopwatch.timeConverter(game.singleTime);
+		      game.questionTimes[game.curQuestion] = game.singleTime;
 		      //Increment lap by 1. Remember, we can't use "this" here.
 		},
 		count: function() {
@@ -234,19 +240,23 @@ game = {
 	endQuestion: function() {
 		var image = "";
 		//Add image in
-		if(typeof(game.questions[game.curQuestion].image) != undefined) {
+		if(typeof(game.questions[game.curQuestion].image) != "undefined") {
 			image = game.questions[game.curQuestion].image;
 		} else {
 			var queryURL = "https://api.giphy.com/v1/gifs/search?q="+game.questions[game.curQuestion].correct_answer+"&api_key=dc6zaTOxFJmzC";
-
+			
+			
 			$.ajax({
 		      url: queryURL,
 		      method: 'GET'
 		    }).done(function(response) {
 		      	console.log(response);
-		        $("#image").append('<img src ="'+response.data[i].images.fixed_height.url+'">');
+		      	var image = response.data[0].images.fixed_height.url;
 		    });
+
 		}
+		$("#image").html('<img src ="'+image+'">');
+		
 		if(game.curQuestion == game.questions.length-1) {
 			game.endGame();
 		} else {
@@ -257,7 +267,9 @@ game = {
 		}
 	},
 	endGame: function() {
-		//Add total results on top of normal results.
+		game.stopwatch.stop();
+		//End results!
+		$("#main").html("<p>Game finished! Your results:</p>Total time: "+game.time+"<br>Hardest question: "+game.questions[game.questionTimes.indexOf(Math.max.apply(Math,game.questionTimes))].question+"<br>Easiest question: "+game.questions[game.questionTimes.indexOf(Math.min.apply(Math,game.questionTimes))].question);
 	},
 	populateTrivia: function(trivia){
 		//takes result from either results or API
@@ -269,6 +281,7 @@ game = {
 
 		//Initializes with no extra buttons.
 		$("#main").html('<p id="question"></p><div class="input-group" id="answers"></div>');
+		$("#image").empty();
 
 		//Initializes trivia to have blank question, input area, and submit button.
 		// $("#main").html('<p id="question"></p><div class="input-group" id="answers"></div></div><div class="btn-group"><button class="btn btn-default" type="button" id="submit"><em class="glyphicon glyphicon-share"></em> Select</button><button class="btn btn-default" type="button" id="giveup"><em class="glyphicon glyphicon-remove"></em> Give Up Question</button><button class="btn btn-default" type="button" id="forfeit"><em class="glyphicon glyphicon-warning-sign"></em> Forfeit Game</button></div>');
