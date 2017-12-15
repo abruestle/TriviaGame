@@ -1,0 +1,44 @@
+Gameplay
+	Initial Screen
+		Created automatically at beginning (so it can be re-created)
+			Make bootstrap and then copy so that it is inserted into a main area
+			Needs button to start game
+			Optional bonus inputs for use with API: difficulty, category, number of questions (Each with a default - "", "" (all), 8; category has a Weird Nature extra option that lets you use my questions and disables the other options)
+			Explaination of game either talking about 'Weird Nature' or how to use it.
+		Start button creates next page automatically, with nothing filled in (if it takes a little time due to API, blank is preferable to fake options that seem workable)
+	Trivia questions page
+		Timer
+			Start timer on start of each question
+			Timer stops when submitted, question is given up, or forfeited
+				All also add the time used in the question to the total time.
+			TimeOut is needed to auto-exit question.
+					Because of this, all things in pages other than start page cannot have a 'this' property
+						Refer to things based on if they are on the page, or populate things to the object.
+			Check that answer clicked matches correct answer...TimeOut auto-gives up
+		Populate data
+			Create areas
+			Get data for questions, populate to 'questions' - so API can be added and not have repeat questions.
+			Get question (Use normal order)
+			Get answers
+				Shuffling algorithm - don't use 'this'
+
+	Answer page
+		Create new page and replace main area.
+		No 'this'
+		Has to show what their answer is, so a variable has to be populated beforehand when submitted.
+		give different message for giving up, forfeiting, timing out, and for finishing.
+		Finishing may have a different message based on the number.
+		Button to go to next question if not forfeited or finished.
+		So really:
+			Answer page (general)
+				-question
+				-answer given/if skipped
+				-right or wrong
+				-if wrong, what the real answer was
+			+ forfeited if forfeited
+			+ comment on completion if finished normally/based on how many right
+			+ End results (if finished any way)
+
+
+Shuffling
+	Shuffling option here: https://stackoverflow.com/questions/5329201/jquery-move-elements-into-a-random-order but must be changed to not use 'this'.
