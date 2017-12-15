@@ -220,13 +220,14 @@ game = {
 		// input: $("#label"+$(":checked")[0].id).text()
 		//to be added back in if using submit buttons
 		// if (typeof($(":checked")[0]) != "undefined") {
-			if(guess ==game.questions[game.curQuestion].correct_answer){
-				game.rightAnswer();
-			} else {
-				game.wrongAnswer();
-			}
+		game.guess = guess;
+		if(guess ==game.questions[game.curQuestion].correct_answer){
+			game.rightAnswer();
+		} else {
+			game.wrongAnswer();
+		}
 		// }
-			game.endQuestion();
+		game.endQuestion();
 	},
 	noAnswer: function() {
 		//ran out of time
@@ -256,20 +257,34 @@ game = {
 
 		}
 		$("#image").html('<img src ="'+image+'">');
-		
+
 		if(game.curQuestion == game.questions.length-1) {
 			game.endGame();
 		} else {
 			setTimeout(function(){
 				game.curQuestion++;
 				game.populateTrivia();
-			}, 5000);
+			}, 4000);
 		}
 	},
 	endGame: function() {
 		game.stopwatch.stop();
 		//End results!
-		$("#main").html("<p>Game finished! Your results:</p>Total time: "+game.time+"<br>Hardest question: "+game.questions[game.questionTimes.indexOf(Math.max.apply(Math,game.questionTimes))].question+"<br>Easiest question: "+game.questions[game.questionTimes.indexOf(Math.min.apply(Math,game.questionTimes))].question);
+		$("#main").html("<p>Game finished! Your results:</p>Total time: "+game.stopwatch.timeConverter( game.time)+"<br>Most time consuming question: "+game.questions[game.questionTimes.indexOf(Math.max.apply(Math,game.questionTimes))].question+"<br>Least time consuming question: "+game.questions[game.questionTimes.indexOf(Math.min.apply(Math,game.questionTimes))].question+"<br>You got "+game.right+" questions right, "+game.wrong+" questions wrong, and ran out of time on "+game.ranOut+' questions.<br><div class="btn-group"><button class="btn btn-default" type="button" id="restart"><em class="glyphicon glyphicon-repeat"></em> Restart?</button></div><br>');
+			game.stopwatch.reset();
+			game.right= 0;
+			game.wrong= 0;
+			game.ranOut= 0;
+			game.intervalId= 0;
+			game.clockRunning= false;
+			game.questionTimes= [];
+			game.curQuestion= 0;
+			game.guess= "";
+			game.answerOrder= [];
+
+
+		//Show the number of correct answers, incorrect answers, and an option to restart the game (without reloading the page).
+
 	},
 	populateTrivia: function(trivia){
 		//takes result from either results or API
@@ -320,6 +335,9 @@ game = {
 	startScreen: function(){
 		//Makes intro screen with options for difficulty and start button.
 		$("#main").html('<p>Welcome to my Trivia Game. Default category: Weird Science.</p><div class="btn-group"><button class="btn btn-default" type="button" id="start"><em class="glyphicon glyphicon-play"></em> Start</button></div>');
+		$("#image").empty();
+		$("#display").empty();
+		$("#display2").empty();
 	},
 	startTrivia: function(){
 		
@@ -360,4 +378,10 @@ $("body").on("click", "#start", function() {
 $("body").on("change", "#category", function() {
 	//reads changes to category dropdown and selects value
 	game.startTrivia();
+});
+
+
+$("body").on("click", "#restart", function() {
+	//reads changes to category dropdown and selects value
+	game.startScreen();
 });
