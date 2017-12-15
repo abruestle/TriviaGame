@@ -295,7 +295,7 @@ game = {
 		console.log(game.questions[game.curQuestion]);
 
 		//Initializes with no extra buttons.
-		$("#main").html('<p id="question"></p><div class="input-group" id="answers"></div>');
+		$("#main").html('<p id="question"></p><div class="btn-group btn-group-vertical" data-toggle="buttons" id="answers"></div>');
 		$("#image").empty();
 
 		//Initializes trivia to have blank question, input area, and submit button.
@@ -320,7 +320,10 @@ game = {
 	        } else {
 	        	answer = game.questions[game.curQuestion].correct_answer;
 	        }
-	        $("#answers").append('<div class="radio"><label id="label'+i+'"><input type="radio" name="optradio" id="'+i+'">'+answer+'</label></div>');
+	        // <div class="radio"><label id="label'+i+'"><input type="radio" name="optradio" id="'+i+'">'+answer+'</label></div>');
+
+
+	        $("#answers").append('<label class="btn answerBtn"><input type="radio" name="gender1" checked><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span id="'+i+'">'+answer+'</span></label>');
 		}
 		game.stopwatch.start();
 
@@ -364,9 +367,9 @@ game = {
 
 game.startScreen();
 
-$("body").on("click", ".radio", function() {
+$("body").on("click", ".answerBtn", function() {
 	console.log($(this).text());
-	game.checkAnswer($(this).text());
+	game.checkAnswer($(this).text().trim());
 });
 
 
