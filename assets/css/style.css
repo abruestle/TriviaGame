@@ -2,6 +2,24 @@
 	font-size:20px;
 }
 
+body, html {
+    height: 100%;
+}
+.bg { 
+    /* The image used */
+    background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+
+    /* Half height */
+    height: 50%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
 img, #image {
 	max-height: 350px;
 	margin: 10px auto;
@@ -25,6 +43,13 @@ p {
 
 .main {
 	font-size:20px;
+}
+
+.col-sm-6 {
+	background-color: white;
+	padding:20px;
+	border-radius:50px;
+	opacity:.8;
 }
 
 /* For radio buttons:*/
